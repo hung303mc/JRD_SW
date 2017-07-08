@@ -21,14 +21,17 @@
         <file>Image/Finished_Practice1.png</file>
         <file>Image/Finished_Practice2.png</file>
         <file>Image/Finished_Practice3.png</file>
-        <file>MainHandler.qml</file>
         <file>RehabGame.qml</file>
-        <file>RehabGameForm.ui.qml</file>
         <file>Image/extension.png</file>
         <file>Image/flexion.png</file>
         <file>Image/neutral.png</file>
         <file>SettingHandler.qml</file>
-        <file>SettingHandlerForm.ui.qml</file>
         <file>TrainingHandler.qml</file>
+        <file>Image/back_button.png</file>
+        <file>Image/back_button_onclick.png</file>
+        <file>Image/back_button_onenter.png</file>
+        <file>Image/starscream.png</file>
+        <file>Image/Congrats.jpg</file>
+        <file>MainHandler.qml</file>
     </qresource>
 </RCC>

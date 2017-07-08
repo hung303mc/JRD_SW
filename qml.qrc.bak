@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Image/achivement1.png</file>
+        <file>Image/achivement10.png</file>
+        <file>Image/achivement2.png</file>
+        <file>Image/achivement3.png</file>
+        <file>Image/achivement4.png</file>
+        <file>Image/achivement5.png</file>
+        <file>Image/achivement6.png</file>
+        <file>Image/achivement7.png</file>
+        <file>Image/achivement8.png</file>
+        <file>Image/achivement9.png</file>
+        <file>Image/Active_Icon.png</file>
+        <file>Image/achivement.png</file>
+        <file>Image/Setting.png</file>
+        <file>Image/Locked_Practice.png</file>
+        <file>Image/Practice1.png</file>
+        <file>Image/Practice2.png</file>
+        <file>Image/Practice3.png</file>
+        <file>TrainingHandler.qml</file>
+        <file>TrainingHandlerForm.ui.qml</file>
+        <file>Image/Finished_Practice1.png</file>
+        <file>Image/Finished_Practice2.png</file>
+        <file>Image/Finished_Practice3.png</file>
+        <file>MainHandler.qml</file>
+        <file>MainHandlerForm.ui.qml</file>
+        <file>PerformanceHandler.qml</file>
+        <file>PerformanceHandlerForm.ui.qml</file>
+    </qresource>
+</RCC>

@@ -3,8 +3,6 @@ import QtGraphicalEffects 1.0
 
 Item {
     id: mainHandlerForm
-    width: 800
-    height: 640
 
     Column {
         id: column
@@ -144,5 +142,6 @@ Item {
     {
         id:mainPageLoader
         anchors.fill:parent
+        focus: true
     }
 }
