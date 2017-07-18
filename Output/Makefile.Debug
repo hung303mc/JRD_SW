@@ -92,38 +92,38 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_qml.cpp
 debug/qrc_qml.cpp: ../qml.qrc \
 		E:/00_Software/Qt/5.8/mingw53_32/bin/rcc.exe \
+		../Training_01.qml \
 		../TrainingHandler.qml \
-		../SettingHandler.qml \
+		../SettingPage.qml \
 		../MainHandler.qml \
-		../RehabGame.qml \
+		../Training_02.qml \
 		../main.qml \
-		../Image/Practice1.png \
-		../Image/Practice2.png \
-		../Image/Practice3.png \
-		../Image/extension.png \
-		../Image/Active_Icon.png \
-		../Image/achivement1.png \
-		../Image/neutral.png \
+		../Image/Training_btn_Gist.png \
+		../Image/TrainingH_gist.png \
+		../Image/MainH_system_128.png \
+		../Image/Training_btn_Gist_02.png \
+		../Image/MainH_result_128.png \
+		../Image/Training_btn_Gist_03.png \
+		../Image/Training_btn_Strength.png \
+		../Image/TrainingH_background.jpg \
+		../Image/MainH_system_265.png \
+		../Image/Training_HandDown.png \
+		../Image/MainH_result_265.png \
+		../Image/MainH_training_128.png \
 		../Image/back_button_onenter.png \
-		../Image/achivement2.png \
-		../Image/achivement3.png \
-		../Image/achivement4.png \
-		../Image/flexion.png \
-		../Image/achivement5.png \
-		../Image/achivement6.png \
-		../Image/achivement7.png \
-		../Image/achivement8.png \
+		../Image/TrainingH_speed.png \
+		../Image/Training_btn_Strength_02.png \
+		../Image/Training_HandNeutral.png \
+		../Image/Training_btn_Strength_03.png \
+		../Image/Training_btn_Strength_04.png \
 		../Image/back_button_onclick.png \
-		../Image/achivement9.png \
-		../Image/Setting.png \
+		../Image/MainH_training_265.png \
+		../Image/TrainingH_lock.png \
+		../Image/TrainingH_star.png \
 		../Image/back_button.png \
-		../Image/Congrats.jpg \
-		../Image/Finished_Practice1.png \
-		../Image/achivement.png \
-		../Image/Finished_Practice2.png \
-		../Image/Finished_Practice3.png \
-		../Image/achivement10.png \
-		../Image/Locked_Practice.png
+		../Image/TrainingH_strength.png \
+		../Image/Training_btn_Speed.png \
+		../Image/Training_HandUp.png
 	E:\00_Software\Qt\5.8\mingw53_32\bin\rcc.exe -name qml ..\qml.qrc -o debug\qrc_qml.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h

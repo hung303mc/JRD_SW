@@ -10,5 +10,6 @@ ApplicationWindow {
     title: qsTr("JRD Software")
 
     MainHandler{
+        anchors.fill: parent
     }
 }

@@ -1,37 +1,36 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Image/achivement1.png</file>
-        <file>Image/achivement10.png</file>
-        <file>Image/achivement2.png</file>
-        <file>Image/achivement3.png</file>
-        <file>Image/achivement4.png</file>
-        <file>Image/achivement5.png</file>
-        <file>Image/achivement6.png</file>
-        <file>Image/achivement7.png</file>
-        <file>Image/achivement8.png</file>
-        <file>Image/achivement9.png</file>
-        <file>Image/Active_Icon.png</file>
-        <file>Image/achivement.png</file>
-        <file>Image/Setting.png</file>
-        <file>Image/Locked_Practice.png</file>
-        <file>Image/Practice1.png</file>
-        <file>Image/Practice2.png</file>
-        <file>Image/Practice3.png</file>
-        <file>Image/Finished_Practice1.png</file>
-        <file>Image/Finished_Practice2.png</file>
-        <file>Image/Finished_Practice3.png</file>
-        <file>RehabGame.qml</file>
-        <file>Image/extension.png</file>
-        <file>Image/flexion.png</file>
-        <file>Image/neutral.png</file>
-        <file>SettingHandler.qml</file>
+        <file>Training_02.qml</file>
+        <file>SettingPage.qml</file>
         <file>TrainingHandler.qml</file>
         <file>Image/back_button.png</file>
         <file>Image/back_button_onclick.png</file>
         <file>Image/back_button_onenter.png</file>
-        <file>Image/starscream.png</file>
-        <file>Image/Congrats.jpg</file>
         <file>MainHandler.qml</file>
+        <file>Training_01.qml</file>
+        <file>Image/MainH_result_128.png</file>
+        <file>Image/MainH_result_265.png</file>
+        <file>Image/MainH_system_128.png</file>
+        <file>Image/MainH_system_265.png</file>
+        <file>Image/MainH_training_128.png</file>
+        <file>Image/MainH_training_265.png</file>
+        <file>Image/Training_HandDown.png</file>
+        <file>Image/Training_HandNeutral.png</file>
+        <file>Image/Training_HandUp.png</file>
+        <file>Image/TrainingH_lock.png</file>
+        <file>Image/TrainingH_speed.png</file>
+        <file>Image/TrainingH_star.png</file>
+        <file>Image/TrainingH_strength.png</file>
+        <file>Image/TrainingH_gist.png</file>
+        <file>Image/TrainingH_background.jpg</file>
+        <file>Image/Training_btn_Gist.png</file>
+        <file>Image/Training_btn_Speed.png</file>
+        <file>Image/Training_btn_Strength.png</file>
+        <file>Image/Training_btn_Gist_02.png</file>
+        <file>Image/Training_btn_Gist_03.png</file>
+        <file>Image/Training_btn_Strength_02.png</file>
+        <file>Image/Training_btn_Strength_03.png</file>
+        <file>Image/Training_btn_Strength_04.png</file>
     </qresource>
 </RCC>
