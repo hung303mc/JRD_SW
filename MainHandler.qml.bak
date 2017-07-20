@@ -1,127 +1,174 @@
 import QtQuick 2.4
-import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.2
 
 Item {
     id: mainHandlerForm
+    anchors.fill: parent
 
-    Column {
+    property bool train_exer1: false
+    property bool train_exer2: false
+    property bool train_exer3: false
+//    property alias t1:mainHandlerForm.train_exer1
+//    property alias t2:mainHandlerForm.train_exer2
+//    property alias t3:mainHandlerForm.train_exer3
+
+    ColumnLayout {
         id: column
-        anchors.fill: parent
+        spacing: 2
 
         Rectangle {
             id: trainingOption
-            width: mainHandlerForm.width
-            height: mainHandlerForm.height / 3
-            color: "#ffffff"
+            Layout.preferredWidth: mainHandlerForm.width
+            Layout.preferredHeight: mainHandlerForm.height / 3
+            color: "#8cf2dc" // default color is light mint
 
-            Image {
-                id: imgTraining
-                x: 263
-                y: 57
-                width: 100
-                height: 100
-                source: "Image/Active_Icon.png"
+            Row{
+                anchors.centerIn: parent
+                spacing: mainHandlerForm.width/15
+                Image {
+                    id: imgTraining
+
+                    width: 100
+                    height: 100
+                    source: "Image/MainH_training_128.png"
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Image.AlignLeft
+                    verticalAlignment: Image.AlignVCenter
+
+                    }
+                Text {
+                    id: txtTraining
+                    width: 200
+                    height: 100
+                    text: qsTr("TRAINING")
+                    font.pixelSize: 30
+                    color: "#07335a"    // default color is blue
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment : Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+
+                }
             }
-            Text {
-                id: txtTraining
-                x: 385
-                y: 57
-                width: 201
-                height: 100
-                text: qsTr("TRAINING")
-                font.pixelSize: 12
-            }
+
+
             MouseArea {
                 id: mouseTraining
                 anchors.fill:parent
                 hoverEnabled: true
+
+                /* hover color */
                 onEntered: {
-                    parent.color="#ffe699"
-                    glowArea1.spread = 1.0
-                    glowArea1.radius = 3
-                    glowArea1.samples = 17
-                    glowArea1.transparentBorder = true
-                    glowArea1.color = "red"
-                    glowArea1.source = trainingOption
+                    parent.color="#66c8bb"     // hover color is dark mint
+                    txtTraining.color = "white"
                 }
+                /* background color */
                 onExited: {
-                    parent.color="white"
+                    parent.color="#8cf2dc"      // default color is light mint
+                    txtTraining.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="TrainingHandler.qml"
-            }
-            Glow{
-                id: glowArea1
-                spread: 1.0
-                radius: 8
-                transparentBorder: true
-                color: "red"
-                source: trainingOption
+                onPressed: {
+                    mainHandlerForm.train_exer1=true;
+                    mainHandlerForm.train_exer2=true;
+                    mainHandlerForm.train_exer3=true;
+                    mainPageLoader.source="TrainingHandler.qml"
+                }
             }
 
         }
 
         Rectangle {
-            id: performanceOption
-            width: mainHandlerForm.width
-            height: mainHandlerForm.height / 3
-            color: "#ffffff"
+            id: resultOption
+            Layout.preferredWidth: mainHandlerForm.width
+            Layout.preferredHeight: mainHandlerForm.height / 3
+            color: "#8cf2dc"
 
-            Image {
-                id: imgPerf
-                x: 260
-                y: 57
-                width: 100
-                height: 100
-                source: "Image/achivement.png"
-            }
+            Row{
+                anchors.centerIn: parent
+                spacing: mainHandlerForm.width/15
+                Image {
+                    id: imgResult
 
-            Text {
-                id: txtPerf
-                x: 381
-                y: 57
-                width: 203
-                height: 100
-                text: qsTr("ACHIEVEMENT")
-                font.pixelSize: 12
+                    width: 100
+                    height: 100
+                    fillMode:Image.PreserveAspectFit
+                    source: "Image/MainH_result_128.png"
+
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    horizontalAlignment: Image.AlignLeft
+                    verticalAlignment: Image.AlignVCenter
+                }
+
+                Text {
+                    id: txtResult
+
+                    width: 200
+                    height: 100
+                    text: qsTr("RESULT")
+                    font.pixelSize: 30
+                    color: "#07335a"
+
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    horizontalAlignment : Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+
+                }
             }
 
             MouseArea {
-                id: mousePerf
+                id: mouseResult
                 anchors.fill:parent
                 hoverEnabled: true
                 onEntered: {
-                    parent.color="#bdd7ee"
+                    parent.color="#66c8bb"
+                    txtResult.color = "white"
                 }
                 onExited: {
-                    parent.color="white"
+                    parent.color="#8cf2dc"
+                    txtResult.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="PerformanceHandler.qml"
+                onPressed: mainPageLoader.source="ResultPage.qml"
             }
         }
 
         Rectangle {
             id: settingOption
-            width: mainHandlerForm.width
-            height: mainHandlerForm.height / 3
-            color: "#ffffff"
+            Layout.preferredWidth: mainHandlerForm.width
+            Layout.preferredHeight: mainHandlerForm.height / 3
+            color: "#8cf2dc"
 
-            Image {
-                id: imgSetting
-                x: 268
-                y: 57
-                width: 100
-                height: 100
-                source: "Image/Setting.png"
-            }
+            Row{
+                anchors.centerIn: parent
+                spacing: mainHandlerForm.width/15
+                Image {
+                    id: imgSetting
 
-            Text {
-                id: txtSetting
-                x: 389
-                y: 57
-                width: 195
-                height: 100
-                text: qsTr("SETTING")
-                font.pixelSize: 12
+                    width: 100
+                    height: 100
+                    source: "Image/MainH_system_128.png"
+
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Image.AlignLeft
+                    verticalAlignment: Image.AlignVCenter
+                }
+
+                Text {
+                    id: txtSetting
+                    width: 200
+                    height: 100
+                    text: qsTr("SETTING")
+                    font.pixelSize: 30
+                    color: "#07335a"
+
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    horizontalAlignment : Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+
+                }
             }
 
             MouseArea {
@@ -129,12 +176,14 @@ Item {
                 anchors.fill:parent
                 hoverEnabled: true
                 onEntered: {
-                    parent.color="#c5e0b4"
+                    parent.color="#66c8bb"
+                    txtSetting.color = "white"
                 }
                 onExited: {
-                    parent.color="white"
+                    parent.color="#8cf2dc"
+                    txtSetting.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="SettingHandler.qml"
+                onPressed: mainPageLoader.source="SettingPage_BT.qml"
             }
         }
     }

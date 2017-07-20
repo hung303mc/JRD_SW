@@ -225,6 +225,7 @@ Makefile: ../JRD_SW.pro E:/00_Software/Qt/5.8/mingw53_32/mkspecs/win32-g++/qmake
 		E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Gui.prl \
 		E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Qml.prl \
 		E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Network.prl \
+		E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Bluetooth.prl \
 		E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Core.prl
 	$(QMAKE) -o Makefile ..\JRD_SW.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 E:/00_Software/Qt/5.8/mingw53_32/mkspecs/features/spec_pre.prf:
@@ -393,6 +394,7 @@ E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Quick.prl:
 E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Gui.prl:
 E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Qml.prl:
 E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Network.prl:
+E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Bluetooth.prl:
 E:/00_Software/Qt/5.8/mingw53_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\JRD_SW.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"

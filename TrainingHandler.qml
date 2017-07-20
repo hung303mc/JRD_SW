@@ -64,9 +64,14 @@ Item {
         }
     }
 
+    /**********************************
+      ****** TRAINING MENU *********
+     **********************************/
     Rectangle{
     Column {
         id: column
+
+        // header margin
         Rectangle{
             width: trainingHandlerForm.width
             height: trainingHandlerForm.height/7
@@ -96,6 +101,8 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: parent.width*10/100
+
+
             }
 
             ColorOverlay {
@@ -250,7 +257,9 @@ Item {
 
 
 
-
+         /*
+          * STATE MANAGEMENT
+          */
 
         states: [
             State {
@@ -284,7 +293,10 @@ Item {
     }
 
     }
-    /* back button */
+
+    /*
+     * BACK BUTTON
+     */
     Image {
         id: back
         source: "Image/back_button.png"

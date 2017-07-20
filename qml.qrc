@@ -27,11 +27,9 @@
         <file>Image/Training_btn_Gist.png</file>
         <file>Image/Training_btn_Speed.png</file>
         <file>Image/Training_btn_Strength.png</file>
-        <file>Image/Training_btn_Gist_02.png</file>
-        <file>Image/Training_btn_Gist_03.png</file>
-        <file>Image/Training_btn_Strength_02.png</file>
-        <file>Image/Training_btn_Strength_03.png</file>
-        <file>Image/Training_btn_Strength_04.png</file>
-        <file>SettingPage_BT.qml</file>
+        <file>Image/EndPage_btn_Fast.png</file>
+        <file>Image/EndPage_btn_Gist.png</file>
+        <file>Image/EndPage_btn_Strength.png</file>
+        <file>Image/Training_Animate_Robot.png</file>
     </qresource>
 </RCC>

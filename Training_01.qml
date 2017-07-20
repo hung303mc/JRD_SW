@@ -6,14 +6,14 @@ import QtQuick 2.4
 import QtGraphicalEffects 1.0
 
 Item {
-    id: training_02
+    id: training_01
     anchors.fill: parent
 
     property int position:0
     property int pre_position:0
     property int count : 0
     property int set_goal:10
-    property alias count_forward: training_02.count
+    property alias count_forward: training_01.count
 
     property bool visibleStartPage: true
     property bool visibleTrainingPage: false
@@ -177,26 +177,21 @@ Item {
 //                }
 
                 SpriteSequence {
-                        id: test
                         width: 492 *60/100
                         height: 152 *60/100
-                        //interpolate: true
+                        interpolate: true
 
                         anchors.horizontalCenter:parent.horizontalCenter
-                        //verticalAlignment: Image.AlignBottom
                         y: parent.height*50/100 // 50% distance
 
-
-
-                Sprite {
-                    name: "left"
-                    source: "Image/Training_btn_Gist_03.png"
-                    frameCount: 2
-                    frameDuration: 600
-
-
+                    Sprite {
+                        name: "left"
+                        source: "Image/EndPage_btn_Gist.png"
+                        frameCount: 2
+                        frameDuration: 500
+                    }
                 }
-                }
+
                 //SpriteSequence doesn't support mouse area. Using "invisible" rectange
                 Rectangle
                 {
@@ -226,35 +221,56 @@ Item {
         anchors.fill: parent
         id: bgr_img
         visible: visibleTrainingPage
-//        source: "Image/starscream.png"
+        color: "#ffffbb"
 
-        Text {
-            id: txtScore
-            font.pointSize: 30
-            x:parent.width*3/5
-            y:height/2
-            color: "blue"
-            text: scoreValue.toLocaleString();
-            font.family: "Segoe Script"
-            font.bold: true
-        }
-        Text {
-            id: txtNumberofPractice
-            font.pointSize: 30
-            x:parent.width*4/5 +width
-            y:height/2
-            color: "yellow"
-            text: set_goal.toLocaleString();
-            font.family: "Segoe Script"
-            font.bold: true
+        // NUMBER OF PRACTICE
+        Rectangle{
+            width: 128*70*2/100
+            height:128*70/100
+            LinearGradient {
+                anchors.fill: parent
+                start: Qt.point(parent.width, 0)
+                end: Qt.point(0, 0)
+                gradient: Gradient {
+                          GradientStop { position: 1.0; color: "#ffffbb" }
+                          GradientStop { position: 0.0; color: "white" }
+                      }
+            }
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width/6
+            anchors.top: parent.top
+            anchors.topMargin: parent.height/30
+
+            Row{
+            spacing: parent.width/4
+            Image{
+                source: "Image/TrainingH_gist.png"
+                width: 128 *70/100
+                height: 128*70/100
+                verticalAlignment: Image.AlignVCenter
+            }
+            Text {
+                id: txtNumberofPractice
+                width: 128 *70/100
+                height: 128*70/100
+                font.pointSize: 30
+                color: "#eeca2b"
+                text: numberOfPractice.toLocaleString();
+                font.family: "Tamoha"
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+
+            }
+            }
         }
 
+        // KEY BOARD 1
         Rectangle {
             id: keyboard1
             x: parent.width*4/16
-            y: parent.height*1/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*3/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -269,11 +285,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee"; // hover color is light blue
-
-                    training_02.position=1;
-                    check_status();
+                    parent.color="#ffe064"; // hover color is light yellow
                 }
                 onExited: parent.color="white"
             }
@@ -282,7 +294,7 @@ Item {
             states: [
                 State {
                     name: "state1On"
-                    PropertyChanges { target: keyboard1; color: "blue"}
+                    PropertyChanges { target: keyboard1; color: "#ffe064"}
                 },
                 State {
                     name: "state1Off"
@@ -292,35 +304,15 @@ Item {
                     name: "state1Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state1On"
-                    to: "state1Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 2
         Rectangle{
             id: keyboard2
             x: parent.width*3/16
-            y: parent.height*5/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*7/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -335,10 +327,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee";
-                    training_02.position=1;
-                    check_status();
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -347,7 +336,7 @@ Item {
             states: [
                 State {
                     name: "state2On"    //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard2; color: "blue"}
+                    PropertyChanges { target: keyboard2; color: "#ffe064"}
                 },
                 State {
                     name: "state2Off"
@@ -357,35 +346,15 @@ Item {
                     name: "state2Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state2Off"
-                    to: "state2Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 3
         Rectangle{
             id: keyboard3
             x: parent.width*2/16
-            y: parent.height*9/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*11/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -400,10 +369,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee";
-                    training_02.position=1;
-                    check_status();
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -412,7 +378,7 @@ Item {
             states: [
                 State {
                     name: "state3On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard3; color: "blue"}
+                    PropertyChanges { target: keyboard3; color: "#ffe064"}
                 },
                 State {
                     name: "state3Off"
@@ -422,35 +388,15 @@ Item {
                     name: "state3Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state3Off"
-                    to: "state3Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 4
         Rectangle{
             id: keyboard4
             x: parent.width*1/16
-            y: parent.height*13/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*15/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -465,9 +411,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandNeutral.png";
-                    parent.color="#bdd7ee";
-                    //training_02=0;
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -476,7 +420,7 @@ Item {
             states: [
                 State {
                     name: "state4On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard4; color: "blue"}
+                    PropertyChanges { target: keyboard4; color: "#ffe064"}
                 },
                 State {
                     name: "state4Off"
@@ -486,35 +430,15 @@ Item {
                     name: "state4Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state4Off"
-                    to: "state4Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 5
         Rectangle{
             id: keyboard5
             x: parent.width*1/16
-            y: parent.height*17/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*19/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -529,9 +453,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandNeutral.png";
-                    parent.color="#bdd7ee";
-                    //training_02=0;
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -540,7 +462,7 @@ Item {
             states: [
                 State {
                     name: "state5On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard5; color: "blue"}
+                    PropertyChanges { target: keyboard5; color: "#ffe064"}
                 },
                 State {
                     name: "state5Off"
@@ -550,35 +472,15 @@ Item {
                     name: "state5Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state5Off"
-                    to: "state5Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 6
         Rectangle{
             id: keyboard6
             x: parent.width*2/16
-            y: parent.height*21/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*23/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -593,10 +495,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_02.position=2;
-                    check_status();
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -605,7 +504,7 @@ Item {
             states: [
                 State {
                     name: "state6On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard6; color: "blue"}
+                    PropertyChanges { target: keyboard6; color: "#ffe064"}
                 },
                 State {
                     name: "state6Off"
@@ -615,35 +514,15 @@ Item {
                     name: "state6Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state6Off"
-                    to: "state6Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 7
         Rectangle{
             id: keyboard7
             x: parent.width*3/16
-            y: parent.height*25/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*27/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -658,10 +537,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_02.position=2;
-                    check_status();
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -670,7 +546,7 @@ Item {
             states: [
                 State {
                     name: "state7On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard7; color: "blue"}
+                    PropertyChanges { target: keyboard7; color: "#ffe064"}
                 },
                 State {
                     name: "state7Off"
@@ -680,35 +556,15 @@ Item {
                     name: "state7Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state7Off"
-                    to: "state7Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
+        // KEY BOARD 8
         Rectangle{
             id: keyboard8
             x: parent.width*4/16
-            y: parent.height*29/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*31/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -721,10 +577,7 @@ Item {
                 hoverEnabled: true
                 onEntered:
                 {
-                    imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_02.position=2;
-                    check_status();
+                    parent.color="#ffe064";
                 }
                 onExited: parent.color="white"
             }
@@ -733,7 +586,7 @@ Item {
             states: [
                 State {
                     name: "state8On"
-                    PropertyChanges { target: keyboard8; color: "blue"}
+                    PropertyChanges { target: keyboard8; color: "#ffe064"}
                 },
                 State {
                     name: "state8Off"
@@ -743,35 +596,49 @@ Item {
                     name: "state8Selected"
                 }
             ]
-
-            /* blinking when target is selected */
-            transitions: [
-                Transition {
-                    from: "state8On"
-                    to: "state8Selected"
-                    SequentialAnimation{
-                        loops: 3
-                        ColorAnimation {
-                            from: "white"
-                            to: "red"
-                            duration: 200
-                        }
-                        ColorAnimation {
-                            from: "red"
-                            to: "white"
-                            duration: 200
-                        }
-                    }
-                }
-            ]
         }
 
-        Image {
-            id: imgHand
-            x: parent.width- width
-            y: parent.height/3
-            visible: true
-            source: "Image/Training_HandNeutral.png"
+        SpriteSequence {
+                width: 344
+                height: 350
+                interpolate: true
+
+                y: parent.height/3
+                anchors.right: parent.right
+                anchors.rightMargin: parent.width/6
+
+            Sprite {
+                name: "left"
+                source: "Image/Training_Animate_Robot.png"
+                frameWidth: 344
+                frameHeight: 350
+                frameCount: 1
+                frameDuration: 500
+                frameDurationVariation: 400
+                to: { "middle" : 1 }
+            }
+            Sprite {
+                name: "middle"
+                source: "Image/Training_Animate_Robot.png"
+                frameWidth: 344
+                frameHeight: 350
+                frameCount: 1
+                frameX: 344
+                frameDuration: 1000
+                frameDurationVariation: 400
+                to: { "left" : 0, "right" : 2 }
+            }
+            Sprite {
+                name: "right"
+                source: "Image/Training_Animate_Robot.png"
+                frameWidth: 344
+                frameHeight: 350
+                frameCount: 1
+                frameX: 688
+                frameDuration: 1000
+                frameDurationVariation: 400
+                to: { "middle" : 2, "left" : 0 }
+            }
         }
 
         // BACK BUTTON
@@ -976,7 +843,7 @@ Item {
     }
     }
     Text {id: txtintervalTiming; x:30;y:0}
-    Text {id: txtStatus; x:30; y:20}
+//    Text {id: txtStatus; x:30; y:20}
 
     /* Score */
     function calculateScore()

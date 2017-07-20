@@ -6,14 +6,14 @@ import QtQuick 2.4
 import QtGraphicalEffects 1.0
 
 Item {
-    id: training_01
+    id: training_02
     anchors.fill: parent
 
     property int position:0
     property int pre_position:0
     property int count : 0
     property int set_goal:10
-    property alias count_forward: training_01.count
+    property alias count_forward: training_02.count
 
     property bool visibleStartPage: true
     property bool visibleTrainingPage: false
@@ -177,18 +177,34 @@ Item {
                         id: test
                         width: 492 *60/100
                         height: 152 *60/100
-                        //interpolate: true
+                        interpolate: true
 
                         anchors.horizontalCenter:parent.horizontalCenter
-                        //verticalAlignment: Image.AlignBottom
                         y: parent.height*50/100 // 50% distance
 
-                Sprite {
-                    name: "left"
-                    source: "Image/Training_btn_Strength_04.png"
-                    frameCount: 2
-                    frameDuration: 600
+                    Sprite {
+                        name: "left"
+                        source: "Image/EndPage_btn_Strength.png"
+                        frameCount: 2
+                        frameDuration: 500
+                    }
                 }
+
+                //SpriteSequence doesn't support mouse area. Using "invisible" rectange
+                Rectangle
+                {
+                    width: 492
+                    height: 152
+                    z:1
+                    opacity: 0.0
+                    anchors.horizontalCenter:parent.horizontalCenter
+                    y: parent.height*50/100 // 50% distance
+
+                    MouseArea{
+                    anchors.fill: parent
+                    onPressed: trainingPageLoader.source="TrainingHandler.qml";
+                    }
+
                 }
             }
         }
@@ -204,34 +220,56 @@ Item {
         anchors.fill: parent
         id: bgr_img
         visible: visibleTrainingPage
+        color: "#ffd8ba"
 
-        Text {
-            id: txtScore
-            font.pointSize: 30
-            x:parent.width*4/5
-            y:height/2
-            color: "blue"
-            text: count.toLocaleString();
-            font.family: "Segoe Script"
-            font.bold: true
-        }
-        Text {
-            id: txtNumberofPractice
-            font.pointSize: 30
-            x:parent.width*4/5 +width
-            y:height/2
-            color: "yellow"
-            text: set_goal.toLocaleString();
-            font.family: "Segoe Script"
-            font.bold: true
+        // NUMBER OF PRACTICE
+        Rectangle{
+            width: 128*70*2/100
+            height:128*70/100
+            LinearGradient {
+                anchors.fill: parent
+                start: Qt.point(parent.width, 0)
+                end: Qt.point(0, 0)
+                gradient: Gradient {
+                          GradientStop { position: 1.0; color: "#ffd8ba" }
+                          GradientStop { position: 0.0; color: "white" }
+                      }
+            }
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width/6
+            anchors.top: parent.top
+            anchors.topMargin: parent.height/30
+
+            Row{
+            spacing: parent.width/4
+            Image{
+                source: "Image/TrainingH_strength.png"
+                width: 128 *70/100
+                height: 128*70/100
+                verticalAlignment: Image.AlignVCenter
+            }
+            Text {
+                id: txtNumberofPractice
+                width: 128 *70/100
+                height: 128*70/100
+                font.pointSize: 30
+                color: "#cf1818"
+                text: numberOfPractice.toLocaleString();
+                font.family: "Tamoha"
+                font.bold: true
+                verticalAlignment: Text.AlignVCenter
+
+            }
+            }
         }
 
+        // KEY BOARD 1
         Rectangle {
             id: keyboard1
             x: parent.width*4/16
-            y: parent.height*1/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*3/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -247,9 +285,9 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee"; // hover color is light blue
+                    parent.color="#ffbb92"; // hover color is light blue
 
-                    training_01.position=1;
+                    training_02.position=1;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -259,7 +297,7 @@ Item {
             states: [
                 State {
                     name: "state1On"
-                    PropertyChanges { target: keyboard1; color: "blue"}
+                    PropertyChanges { target: keyboard1; color: "#ff735c"}
                 },
                 State {
                     name: "state1Off"
@@ -292,12 +330,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 2
         Rectangle{
             id: keyboard2
             x: parent.width*3/16
-            y: parent.height*5/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*7/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -313,8 +352,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee";
-                    training_01.position=1;
+                    parent.color="#ffbb92";
+                    training_02.position=1;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -324,7 +363,7 @@ Item {
             states: [
                 State {
                     name: "state2On"    //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard2; color: "blue"}
+                    PropertyChanges { target: keyboard2; color: "#ff735c"}
                 },
                 State {
                     name: "state2Off"
@@ -357,12 +396,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 3
         Rectangle{
             id: keyboard3
             x: parent.width*2/16
-            y: parent.height*9/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*11/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -378,8 +418,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandUp.png";
-                    parent.color="#bdd7ee";
-                    training_01.position=1;
+                    parent.color="#ffbb92";
+                    training_02.position=1;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -389,7 +429,7 @@ Item {
             states: [
                 State {
                     name: "state3On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard3; color: "blue"}
+                    PropertyChanges { target: keyboard3; color: "#ff735c"}
                 },
                 State {
                     name: "state3Off"
@@ -422,12 +462,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 4
         Rectangle{
             id: keyboard4
             x: parent.width*1/16
-            y: parent.height*13/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*15/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -443,8 +484,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandNeutral.png";
-                    parent.color="#bdd7ee";
-                    //training_01=0;
+                    parent.color="#ffbb92";
+                    //training_02=0;
                 }
                 onExited: parent.color="white"
             }
@@ -453,7 +494,7 @@ Item {
             states: [
                 State {
                     name: "state4On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard4; color: "blue"}
+                    PropertyChanges { target: keyboard4; color: "#ff735c"}
                 },
                 State {
                     name: "state4Off"
@@ -486,12 +527,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 5
         Rectangle{
             id: keyboard5
             x: parent.width*1/16
-            y: parent.height*17/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*19/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -507,8 +549,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandNeutral.png";
-                    parent.color="#bdd7ee";
-                    //training_01=0;
+                    parent.color="#ffbb92";
+                    //training_02=0;
                 }
                 onExited: parent.color="white"
             }
@@ -517,7 +559,7 @@ Item {
             states: [
                 State {
                     name: "state5On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard5; color: "blue"}
+                    PropertyChanges { target: keyboard5; color: "#ff735c"}
                 },
                 State {
                     name: "state5Off"
@@ -550,12 +592,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 6
         Rectangle{
             id: keyboard6
             x: parent.width*2/16
-            y: parent.height*21/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*23/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -571,8 +614,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_01.position=2;
+                    parent.color="#ffbb92";
+                    training_02.position=2;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -582,7 +625,7 @@ Item {
             states: [
                 State {
                     name: "state6On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard6; color: "blue"}
+                    PropertyChanges { target: keyboard6; color: "#ff735c"}
                 },
                 State {
                     name: "state6Off"
@@ -615,12 +658,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 7
         Rectangle{
             id: keyboard7
             x: parent.width*3/16
-            y: parent.height*25/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*27/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -636,8 +680,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_01.position=2;
+                    parent.color="#ffbb92";
+                    training_02.position=2;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -647,7 +691,7 @@ Item {
             states: [
                 State {
                     name: "state7On" //reserved for keyboard2 - 7
-                    PropertyChanges { target: keyboard7; color: "blue"}
+                    PropertyChanges { target: keyboard7; color: "#ff735c"}
                 },
                 State {
                     name: "state7Off"
@@ -680,12 +724,13 @@ Item {
             ]
         }
 
+        // KEY BOARD 8
         Rectangle{
             id: keyboard8
             x: parent.width*4/16
-            y: parent.height*29/32
-            width: parent.width*1/4
-            height: parent.height*1/16
+            y: parent.height*31/36
+            width: parent.width*1/4.5
+            height: parent.height*1/12
             color: "#ffffff"
             radius: 10
             border.width: 3
@@ -699,8 +744,8 @@ Item {
                 onEntered:
                 {
                     imgHand.source="Image/Training_HandDown.png";
-                    parent.color="#bdd7ee";
-                    training_01.position=2;
+                    parent.color="#ffbb92";
+                    training_02.position=2;
                     check_status();
                 }
                 onExited: parent.color="white"
@@ -710,7 +755,7 @@ Item {
             states: [
                 State {
                     name: "state8On"
-                    PropertyChanges { target: keyboard8; color: "blue"}
+                    PropertyChanges { target: keyboard8; color: "#ff735c"}
                 },
                 State {
                     name: "state8Off"
@@ -746,10 +791,12 @@ Item {
 
         Image {
             id: imgHand
-            x: parent.width- width
-            y: parent.height/3
             visible: true
             source: "Image/Training_HandNeutral.png"
+
+            y: parent.height/3
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width/6
         }
 
         // BACK BUTTON
@@ -860,8 +907,6 @@ Item {
                     keyboard1.state = "state1Off"
                     numberOfPractice = numberOfPractice -1
                     intervalTiming = timeInit
-
-                    pre_position = current
                 }
                 else{
                     txtintervalTiming.text = intervalTiming.toString()
@@ -951,7 +996,7 @@ Item {
     Text {id: txtStatus; x:30; y:20}
 
     /* Score */
-    function calculateScore()
+    function scoreValiadate()
     {
         scoreValue = scoreValue*100;
 

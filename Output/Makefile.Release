@@ -11,13 +11,13 @@ MAKEFILE      = Makefile.Release
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+DEFINES       = -DUNICODE -DQT_QML_DEBUG -DQT_NO_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_BLUETOOTH_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -O2 -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -std=gnu++11 -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\..\trunk -I. -IE:\00_Software\Qt\5.8\mingw53_32\include -IE:\00_Software\Qt\5.8\mingw53_32\include\QtQuick -IE:\00_Software\Qt\5.8\mingw53_32\include\QtGui -IE:\00_Software\Qt\5.8\mingw53_32\include\QtANGLE -IE:\00_Software\Qt\5.8\mingw53_32\include\QtQml -IE:\00_Software\Qt\5.8\mingw53_32\include\QtNetwork -IE:\00_Software\Qt\5.8\mingw53_32\include\QtCore -Irelease -IE:\00_Software\Qt\5.8\mingw53_32\mkspecs\win32-g++ 
+INCPATH       = -I..\..\trunk -I. -IE:\00_Software\Qt\5.8\mingw53_32\include -IE:\00_Software\Qt\5.8\mingw53_32\include\QtQuick -IE:\00_Software\Qt\5.8\mingw53_32\include\QtGui -IE:\00_Software\Qt\5.8\mingw53_32\include\QtANGLE -IE:\00_Software\Qt\5.8\mingw53_32\include\QtQml -IE:\00_Software\Qt\5.8\mingw53_32\include\QtNetwork -IE:\00_Software\Qt\5.8\mingw53_32\include\QtBluetooth -IE:\00_Software\Qt\5.8\mingw53_32\include\QtCore -Irelease -IE:\00_Software\Qt\5.8\mingw53_32\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LE:\00_Software\Qt\5.8\mingw53_32\lib E:\00_Software\Qt\5.8\mingw53_32\lib\libqtmain.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Quick.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Gui.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Qml.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Network.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Core.a 
+LIBS        =        -lmingw32 -LE:\00_Software\Qt\5.8\mingw53_32\lib E:\00_Software\Qt\5.8\mingw53_32\lib\libqtmain.a -LC:\utils\my_sql\my_sql\lib -LC:\utils\postgresql\pgsql\lib -lshell32 E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Quick.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Gui.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Qml.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Network.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Bluetooth.a E:\00_Software\Qt\5.8\mingw53_32\lib\libQt5Core.a 
 QMAKE         = E:\00_Software\Qt\5.8\mingw53_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -43,11 +43,16 @@ OBJECTS_DIR   = release
 
 ####### Files
 
-SOURCES       = ..\main.cpp release\qrc_qml.cpp
+SOURCES       = ..\main.cpp \
+		..\MyBluetooth.cpp release\qrc_qml.cpp \
+		release\moc_MyBluetooth.cpp
 OBJECTS       = release/main.o \
-		release/qrc_qml.o
+		release/MyBluetooth.o \
+		release/qrc_qml.o \
+		release/moc_MyBluetooth.o
 
-DIST          =   ..\main.cpp
+DIST          =  ..\MyBluetooth.h ..\main.cpp \
+		..\MyBluetooth.cpp
 QMAKE_TARGET  = JRD_SW
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = JRD_SW.exe
@@ -67,10 +72,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) JRD_SW.zip $(SOURCES) $(DIST) ..\JRD_SW.pro E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\spec_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\qdevice.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\device_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\common\angle.conf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\qconfig.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3drender.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axbase.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axserver.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_charts.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_clucene_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_core.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_core_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_datavisualization.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_datavisualization_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_dbus.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designer.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gui.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_help.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_help_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_location.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_location_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_network.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_network_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_networkauth.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_networkauth_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_nfc.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_opengl.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_positioning.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_purchasing.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_purchasing_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quick.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_script.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_script_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scxml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sensors.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialport.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sql.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_svg.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_testlib.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uitools.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_websockets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_widgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_winextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt_functions.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\win32-g++\qmake.conf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exclusive_builds.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\toolchain.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\default_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\default_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\resolve_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exclusive_builds_post.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\default_post.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\build_pass.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qml_debug.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\rtti.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\precompile_header.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\warn_on.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\resources.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\moc.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\opengl.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qmake_use.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\file_copies.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\windows.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\testcase_targets.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exceptions.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\yacc.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\lex.prf ..\JRD_SW.pro ..\qml.qrc E:\00_Software\Qt\5.8\mingw53_32\lib\qtmain.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Quick.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Gui.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Qml.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Network.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Core.prl   ..\qml.qrc E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\data\dummy.cpp  ..\main.cpp    
+	$(ZIP) JRD_SW.zip $(SOURCES) $(DIST) ..\..\JRD_SW.pro E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\spec_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\qdevice.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\device_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\common\angle.conf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\qconfig.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3drender.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axbase.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axserver.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_charts.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_clucene_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_core.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_core_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_datavisualization.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_datavisualization_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_dbus.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designer.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gui.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_help.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_help_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_location.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_location_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_network.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_network_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_networkauth.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_networkauth_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_nfc.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_opengl.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_positioning.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_purchasing.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_purchasing_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quick.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_script.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_script_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scxml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sensors.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialport.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sql.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_svg.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_testlib.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uitools.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_websockets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_widgets.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_winextras.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xml.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt_functions.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\win32-g++\qmake.conf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exclusive_builds.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\toolchain.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\default_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\default_pre.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\resolve_config.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exclusive_builds_post.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\default_post.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\build_pass.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qml_debug.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\rtti.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\precompile_header.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\warn_on.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qt.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\resources.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\moc.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\opengl.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\qmake_use.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\file_copies.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\win32\windows.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\testcase_targets.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\exceptions.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\yacc.prf E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\lex.prf ..\JRD_SW.pro ..\qml.qrc E:\00_Software\Qt\5.8\mingw53_32\lib\qtmain.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Quick.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Gui.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Qml.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Network.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Bluetooth.prl E:\00_Software\Qt\5.8\mingw53_32\lib\Qt5Core.prl   ..\qml.qrc E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\data\dummy.cpp ..\MyBluetooth.h ..\main.cpp ..\MyBluetooth.cpp    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\qrc_qml.o
+	-$(DEL_FILE) release\main.o release\MyBluetooth.o release\qrc_qml.o release\moc_MyBluetooth.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -101,9 +106,9 @@ release/qrc_qml.cpp: ../qml.qrc \
 		../Image/Training_btn_Gist.png \
 		../Image/TrainingH_gist.png \
 		../Image/MainH_system_128.png \
-		../Image/Training_btn_Gist_02.png \
+		../Image/EndPage_btn_Strength.png \
 		../Image/MainH_result_128.png \
-		../Image/Training_btn_Gist_03.png \
+		../Image/EndPage_btn_Gist.png \
 		../Image/Training_btn_Strength.png \
 		../Image/TrainingH_background.jpg \
 		../Image/MainH_system_265.png \
@@ -112,15 +117,14 @@ release/qrc_qml.cpp: ../qml.qrc \
 		../Image/MainH_training_128.png \
 		../Image/back_button_onenter.png \
 		../Image/TrainingH_speed.png \
-		../Image/Training_btn_Strength_02.png \
 		../Image/Training_HandNeutral.png \
-		../Image/Training_btn_Strength_03.png \
-		../Image/Training_btn_Strength_04.png \
+		../Image/Training_Animate_Robot.png \
 		../Image/back_button_onclick.png \
 		../Image/MainH_training_265.png \
 		../Image/TrainingH_lock.png \
 		../Image/TrainingH_star.png \
 		../Image/back_button.png \
+		../Image/EndPage_btn_Fast.png \
 		../Image/TrainingH_strength.png \
 		../Image/Training_btn_Speed.png \
 		../Image/Training_HandUp.png
@@ -132,25 +136,13 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: E:/00_Software/Qt/5.8/mingw53_32/mkspecs/features/data/dummy.cpp
 	g++ -pipe -fno-keep-inline-dllexport -O2 -std=gnu++11 -frtti -Wall -Wextra -dM -E -o release\moc_predefs.h E:\00_Software\Qt\5.8\mingw53_32\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: release/moc_MyBluetooth.cpp
 compiler_moc_header_clean:
-compiler_moc_source_make_all:
-compiler_moc_source_clean:
-compiler_yacc_decl_make_all:
-compiler_yacc_decl_clean:
-compiler_yacc_impl_make_all:
-compiler_yacc_impl_clean:
-compiler_lex_make_all:
-compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean 
-
-
-
-####### Compile
-
-release/main.o: ../main.cpp E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/QGuiApplication \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qguiapplication.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qtguiglobal.h \
+	-$(DEL_FILE) release\moc_MyBluetooth.cpp
+release/moc_MyBluetooth.cpp: E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QObject \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnamespace.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qglobal.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig.h \
@@ -173,18 +165,13 @@ release/main.o: ../main.cpp E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/QGuiA
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmutex.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnumeric.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qversiontagging.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qtgui-config.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcoreapplication.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs_impl.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstring.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qchar.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbytearray.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qrefcount.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnamespace.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qarraydata.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringbuilder.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs_impl.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlist.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qalgorithms.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiterator.h \
@@ -200,36 +187,149 @@ release/main.o: ../main.cpp E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/QGuiA
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvarlengtharray.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontainerfwd.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject_impl.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qeventloop.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qwindowdefs.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qwindowdefs_win.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qinputmethod.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlocale.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvariant.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmap.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceInfo \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdeviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothAddress \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothaddress.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QByteArray \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QString \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QMetaType \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothSocket \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothsocket.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetooth.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothuuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QtGlobal \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/quuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QDebug \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qdebug.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qhash.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmap.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtextstream.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiodevice.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlocale.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvariant.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qshareddata.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvector.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qpoint.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qset.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontiguouscache.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qshareddata.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer_impl.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsize.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/QQmlApplicationEngine \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlapplicationengine.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlengine.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothserviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QList \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QSharedPointer \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QVariant \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		../MyBluetooth.h \
+		release/moc_predefs.h \
+		E:/00_Software/Qt/5.8/mingw53_32/bin/moc.exe
+	E:\00_Software\Qt\5.8\mingw53_32\bin\moc.exe $(DEFINES) --include release/moc_predefs.h -IE:/00_Software/Qt/5.8/mingw53_32/mkspecs/win32-g++ -IE:/01_Project/Qt/JRD_SW/trunk -IE:/00_Software/Qt/5.8/mingw53_32/include -IE:/00_Software/Qt/5.8/mingw53_32/include/QtQuick -IE:/00_Software/Qt/5.8/mingw53_32/include/QtGui -IE:/00_Software/Qt/5.8/mingw53_32/include/QtANGLE -IE:/00_Software/Qt/5.8/mingw53_32/include/QtQml -IE:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork -IE:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth -IE:/00_Software/Qt/5.8/mingw53_32/include/QtCore -I. -IE:/00_Software/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IE:/00_Software/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IE:/00_Software/Qt/Tools/mingw530_32/i686-w64-mingw32/include -IE:/00_Software/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IE:/00_Software/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IE:/00_Software/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward ..\MyBluetooth.h -o release\moc_MyBluetooth.cpp
+
+compiler_moc_source_make_all:
+compiler_moc_source_clean:
+compiler_yacc_decl_make_all:
+compiler_yacc_decl_clean:
+compiler_yacc_impl_make_all:
+compiler_yacc_impl_clean:
+compiler_lex_make_all:
+compiler_lex_clean:
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
+
+
+
+####### Compile
+
+release/main.o: ../main.cpp E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/QQmlContext \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlcontext.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qurl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbytearray.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qrefcount.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtcore-config.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsystemdetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qprocessordetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcompilerdetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtypeinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsysinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlogging.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qflags.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtypetraits.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qglobalstatic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmutex.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnumeric.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qversiontagging.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbasicatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qgenericatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_msvc.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnamespace.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qarraydata.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstring.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qchar.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringbuilder.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qalgorithms.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiterator.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qhashfunctions.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qpair.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbytearraylist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringlist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qregexp.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringmatcher.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qurlquery.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qjsengine.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qshareddata.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qhash.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcoreevent.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qscopedpointer.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmetatype.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvarlengtharray.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontainerfwd.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject_impl.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qjsvalue.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qtqmlglobal.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qtqml-config.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvariant.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmap.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qdebug.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtextstream.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiodevice.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlocale.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvector.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qpoint.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qset.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontiguouscache.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/QGuiApplication \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qguiapplication.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qtguiglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qtgui-config.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcoreapplication.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qeventloop.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qwindowdefs.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qwindowdefs_win.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/qinputmethod.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsize.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/QQmlApplicationEngine \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlapplicationengine.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlengine.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qjsengine.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqml.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlprivate.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlparserstatus.h \
@@ -237,11 +337,131 @@ release/main.o: ../main.cpp E:/00_Software/Qt/5.8/mingw53_32/include/QtGui/QGuiA
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmllist.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmetaobject.h \
 		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmlerror.h \
-		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmldebug.h
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtQml/qqmldebug.h \
+		../MyBluetooth.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QObject \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceInfo \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdeviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothAddress \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothaddress.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QByteArray \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QString \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QMetaType \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothSocket \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothsocket.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetooth.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothuuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QtGlobal \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/quuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QDebug \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothserviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QList \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QSharedPointer \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QVariant \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qabstractsocket.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\main.cpp
+
+release/MyBluetooth.o: ../MyBluetooth.cpp ../MyBluetooth.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QObject \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnamespace.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qconfig.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtcore-config.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsystemdetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qprocessordetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcompilerdetection.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtypeinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsysinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlogging.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qflags.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtypetraits.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbasicatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qgenericatomic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qatomic_msvc.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qglobalstatic.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmutex.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qnumeric.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qversiontagging.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstring.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qchar.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbytearray.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qrefcount.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qarraydata.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringbuilder.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qalgorithms.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiterator.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qhashfunctions.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qpair.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qbytearraylist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringlist.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qregexp.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qstringmatcher.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcoreevent.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qscopedpointer.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmetatype.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvarlengtharray.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontainerfwd.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qobject_impl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothDeviceInfo \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothdeviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothAddress \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothaddress.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QByteArray \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QString \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QMetaType \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothSocket \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothsocket.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetooth.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothuuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QtGlobal \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/quuid.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QDebug \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qdebug.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qhash.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qmap.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qtextstream.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qiodevice.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qlocale.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvariant.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qshareddata.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qvector.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qpoint.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qset.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qcontiguouscache.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/qbluetoothserviceinfo.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtBluetooth/QBluetoothUuid \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QList \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QSharedPointer \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtCore/QVariant \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		E:/00_Software/Qt/5.8/mingw53_32/include/QtNetwork/qtnetwork-config.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\MyBluetooth.o ..\MyBluetooth.cpp
 
 release/qrc_qml.o: release/qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qrc_qml.o release\qrc_qml.cpp
+
+release/moc_MyBluetooth.o: release/moc_MyBluetooth.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_MyBluetooth.o release\moc_MyBluetooth.cpp
 
 ####### Install
 
