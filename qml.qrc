@@ -32,5 +32,6 @@
         <file>Image/Training_btn_Strength_02.png</file>
         <file>Image/Training_btn_Strength_03.png</file>
         <file>Image/Training_btn_Strength_04.png</file>
+        <file>SettingPage_BT.qml</file>
     </qresource>
 </RCC>
