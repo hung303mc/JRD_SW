@@ -155,24 +155,6 @@ Item {
                     y: parent.height*30/100 // 30% distance
                 }
 
-                // BUTTON to TRAINING HANDLER
-//                Image{
-//                    id:imgTest
-//                    width:  492*60/100  //original * 60%
-//                    height: 152*60/100
-//                    source: "Image/Training_btn_Strength_02.png"
-
-
-//                    anchors.horizontalCenter:parent.horizontalCenter
-//                    verticalAlignment: Image.AlignBottom
-//                    y: parent.height*50/100 // 50% distance
-
-//                    MouseArea{
-//                    anchors.fill: parent
-//                    onPressed: trainingPageLoader.source="TrainingHandler.qml";
-//                    }
-//                }
-
                 SpriteSequence {
                         id: test
                         width: 492 *60/100
@@ -202,7 +184,7 @@ Item {
 
                     MouseArea{
                     anchors.fill: parent
-                    onPressed: trainingPageLoader.source="TrainingHandler.qml";
+                    onPressed: trainingPageLoader.source="TrainingMenu.qml";
                     }
 
                 }
@@ -823,7 +805,7 @@ Item {
                 {
                     backButton.source = "Image/back_button_onclick.png";
                     console.log("Back");
-                    trainingPageLoader.source="TrainingHandler.qml";
+                    trainingPageLoader.source="TrainingMenu.qml";
                 }
             }
         }

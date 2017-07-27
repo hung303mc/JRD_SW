@@ -31,7 +31,7 @@ Item {
             {
                 back.source = "Image/back_button_onclick.png";
                 console.log("Back");
-                trainingPageLoader.source="MainHandler.qml";
+                trainingPageLoader.source="MainMenu.qml";
             }
         }
     }
