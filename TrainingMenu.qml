@@ -2,8 +2,6 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
 Item {
-    id: trainingHandlerForm
-
     anchors.fill: parent
     property bool status_exersice1: true
     property bool status_exersice2: true
@@ -20,7 +18,7 @@ Item {
             status_exersice1=true;
             status_color1=true;
             mouse_active1=true
-            trainingHandlerForm.state="activeState1"
+            //trainingHandlerForm.state="activeState1"
         }
         if(mainHandlerForm.train_exer2){
             status_exersice2=true;
@@ -28,7 +26,7 @@ Item {
             mouse_active2=true
             status_exersice1=true;
             status_color1=true;
-            trainingHandlerForm.state="activeState2";
+            //trainingHandlerForm.state="activeState2";
 
         }
         if(mainHandlerForm.train_exer3){
@@ -41,38 +39,46 @@ Item {
             status_exersice3=true;
             status_color3=true;
             mouse_active3=true;
-            trainingHandlerForm.state="activeState3"
+            //trainingHandlerForm.state="activeState3"
         }
         else{
-            trainingPageLoader.source="Result.qml"
+            trainingPageLoader.source="ResultMenu.qml"
         }
     }
 
-    // BACKGROUND
-    Image{
-        anchors.fill: parent
-        source: "Image/TrainingH_background.jpg"
-        Rectangle
-        {
-//            x:trainingHandlerForm.width*15/100
-            width:10
-            height: trainingHandlerForm.height
 
-            anchors.left: parent.left
-            anchors.leftMargin: parent.width*15/100
-            color: "steelblue"
-        }
-    }
 
+    /**********************************
+      ****** TRAINING MENU *********
+     **********************************/
     Rectangle{
-    Column {
-        id: column
-        Rectangle{
-            width: trainingHandlerForm.width
-            height: trainingHandlerForm.height/7
-            color: "transparent"
+        anchors.fill: parent
+
+        // BACKGROUND
+        Image{
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "Image/TrainingH_background.jpg"
         }
 
+    Column {
+        anchors.fill: parent
+        // header margin
+        Rectangle{
+            width: parent.width
+            height: parent.height/7
+            color: "transparent"
+
+            Rectangle
+            {
+                width:10
+                height: parent.height
+
+                anchors.left: parent.left
+                anchors.leftMargin: parent.width*15/100
+                color: "steelblue"
+            }
+        }
 
         /**********************************
           ******** SPEED TRAINING ******
@@ -83,10 +89,20 @@ Item {
             }
 
             id: exerciseOption2
-            width: trainingHandlerForm.width
-            height: trainingHandlerForm.height* 2/ 7
+            width: parent.width
+            height: parent.height* 2/ 7
             color: "transparent"
 
+            Rectangle
+            {
+                id: colRec1
+                width:10
+                height: parent.height
+
+                anchors.left: parent.left
+                anchors.leftMargin: parent.width*15/100
+                color: "steelblue"
+            }
             Image {
                 id: imgPractice2
                 source: "Image/TrainingH_lock.png"
@@ -94,8 +110,8 @@ Item {
                 width: 128
 
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: parent.width*10/100
+                anchors.horizontalCenter: colRec1.horizontalCenter
+
             }
 
             ColorOverlay {
@@ -115,14 +131,53 @@ Item {
                     }
 
             }
-            Text {
-                enabled: mouse_active2
-                id: txtExe2
-                x:imgPractice2.x +imgPractice2.width
-                y:(exerciseOption2.height-height)/2
-                text: ""
-                font.pixelSize: 32
+
+            /* TRAINING INFORMATION - FAST */
+            Rectangle{
+                width: parent.width
+                height: parent.height
+                color: "transparent"
+                anchors.left: imgPractice2.right
+                anchors.leftMargin: parent.width/15
+
+                Text {
+                    id: txtExe2
+                    text: ""
+                    font.pixelSize: 32
+                    font.family: "Tamoha"
+                    color: "#07335a"
+                    anchors.left: parent.left
+                    anchors.top:parent.top
+                    anchors.topMargin: parent.height/5
+                }
+                Row{
+                    anchors.left:parent.left
+                    anchors.top: txtExe2.bottom
+                    anchors.topMargin: parent.height/15
+
+
+                    // STAR
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: false
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: false
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: false
+                    }
+                }
             }
+
             MouseArea {
                 enabled: mouse_active2
                 id: mouseExe2
@@ -141,9 +196,20 @@ Item {
                 check_state();
             }
             id: exerciseOption1
-            width: trainingHandlerForm.width
-            height: trainingHandlerForm.height* 2/ 7
+            width: parent.width
+            height: parent.height* 2/ 7
             color: "transparent"
+
+            Rectangle
+            {
+                id: colRec2
+                width:10
+                height: parent.height
+
+                anchors.left: parent.left
+                anchors.leftMargin: parent.width*15/100
+                color: "steelblue"
+            }
 
             Image {
                 id: imgPractice1
@@ -152,8 +218,8 @@ Item {
                 width: 128
 
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: parent.width*10/100
+                anchors.horizontalCenter: colRec2.horizontalCenter
+
             }
 
             ColorOverlay {
@@ -173,13 +239,50 @@ Item {
 
             }
 
-            Text {
-                id: txtExe1
-                x:imgPractice1.x +imgPractice1.width
-                y:(exerciseOption1.height-height)/2
-                text: ""
-                font.pixelSize: 32
+            /* TRAINING INFORMATION - STRENGTH */
+            Rectangle{
+                width: parent.width
+                height: parent.height
+                color: "transparent"
+                anchors.left: imgPractice1.right
+                anchors.leftMargin: parent.width/15
 
+                Text {
+                    id: txtExe1
+                    text: ""
+                    font.pixelSize: 32
+                    font.family: "Tamoha"
+                    color: "#07335a"
+                    anchors.left: parent.left
+                    anchors.top:parent.top
+                    anchors.topMargin: parent.height/5
+                }
+                Row{
+                    anchors.left:parent.left
+                    anchors.top: txtExe1.bottom
+                    anchors.topMargin: parent.height/15
+
+
+                    // STAR
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar1_Pr2
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar2_Pr2
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar3_Pr2
+                    }
+                }
             }
 
             MouseArea {
@@ -199,9 +302,21 @@ Item {
                 check_state();
             }
             id: exerciseOption3
-            width: trainingHandlerForm.width
-            height: trainingHandlerForm.height* 2/ 7
+            width: parent.width
+            height: parent.height* 2/ 7
             color: "transparent"
+
+
+            Rectangle
+            {
+                id: colRec3
+                width:10
+                height: parent.height
+
+                anchors.left: parent.left
+                anchors.leftMargin: parent.width*15/100
+                color: "steelblue"
+            }
 
             Image {
                 id: imgPractice3
@@ -210,18 +325,17 @@ Item {
                 width: 128
 
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: parent.width*10/100
+                anchors.horizontalCenter: colRec3.horizontalCenter
             }
 
             ColorOverlay {
                 id:colOverlay3
                 anchors.fill: imgPractice3
                 source: imgPractice3
-                visible: status_exersice3
+                visible: true
                 color: "transparent"  // make image like it lays under red glass
                 SequentialAnimation on color{
-                    running:status_color3
+                    running:true
                     ColorAnimation { to: "yellow"; duration: 500 }
                     PropertyAction { target: imgPractice3; property: "source"; value: "/Image/TrainingH_gist.png" }
                     ColorAnimation { to: "transparent"; duration: 1000 }
@@ -229,18 +343,57 @@ Item {
                     PropertyAction { target: exerciseOption3; property: "color"; value: "white"}
 //                    PropertyAction { target: exerciseOption3; property: "opacity"; value: 0.5}
                     }
-
             }
 
-            Text {
-                id: txtExe3
-                x:imgPractice3.x +imgPractice3.width
-                y:(exerciseOption3.height-height)/2
-                text: ""
-                font.pixelSize: 32
+            /* TRAINING INFORMATION - WARMUP */
+            Rectangle{
+                width: parent.width
+                height: parent.height
+                color: "transparent"
+                anchors.left: imgPractice3.right
+                anchors.leftMargin: parent.width/15
+
+                Text {
+                    id: txtExe3
+                    text: ""
+                    font.pixelSize: 32
+                    font.family: "Tamoha"
+                    color: "#07335a"
+                    anchors.left: parent.left
+                    anchors.top:parent.top
+                    anchors.topMargin: parent.height/5
+                }
+
+                // STAR
+                Row{
+                    anchors.left:parent.left
+                    anchors.top: txtExe3.bottom
+                    anchors.topMargin: parent.height/15
+
+                    // STAR
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar1_Pr1
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar2_Pr1
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar3_Pr1
+                    }
+                }
             }
+
             MouseArea {
-                enabled: mouse_active3
+                enabled: true
                 id: mouseExe3
                 anchors.fill: parent
                 hoverEnabled: true
@@ -250,7 +403,9 @@ Item {
 
 
 
-
+         /*
+          * STATE MANAGEMENT
+          */
 
         states: [
             State {
@@ -284,7 +439,10 @@ Item {
     }
 
     }
-    /* back button */
+
+    /*
+     * BACK BUTTON
+     */
     Image {
         id: back
         source: "Image/back_button.png"
@@ -307,13 +465,10 @@ Item {
             {
                 back.source = "Image/back_button_onclick.png";
                 console.log("Back");
-                trainingPageLoader.source="MainHandler.qml";
+                trainingPageLoader.source="MainMenu.qml";
             }
         }
     }
-
-
-
 
     Loader
     {

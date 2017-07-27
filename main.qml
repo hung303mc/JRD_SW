@@ -9,6 +9,6 @@ ApplicationWindow {
     height: 600
     title: qsTr("JRD Software")
 
-    MainHandler{
+    MainMenu{
     }
 }

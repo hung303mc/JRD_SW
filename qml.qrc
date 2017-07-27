@@ -2,12 +2,9 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Training_02.qml</file>
-        <file>SettingPage.qml</file>
-        <file>TrainingHandler.qml</file>
         <file>Image/back_button.png</file>
         <file>Image/back_button_onclick.png</file>
         <file>Image/back_button_onenter.png</file>
-        <file>MainHandler.qml</file>
         <file>Training_01.qml</file>
         <file>Image/MainH_result_128.png</file>
         <file>Image/MainH_result_265.png</file>
@@ -31,5 +28,8 @@
         <file>Image/EndPage_btn_Gist.png</file>
         <file>Image/EndPage_btn_Strength.png</file>
         <file>Image/Training_Animate_Robot.png</file>
+        <file>MainMenu.qml</file>
+        <file>TrainingMenu.qml</file>
+        <file>SettingMenu.qml</file>
     </qresource>
 </RCC>

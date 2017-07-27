@@ -12,10 +12,14 @@ Item {
 //    property alias t2:mainHandlerForm.train_exer2
 //    property alias t3:mainHandlerForm.train_exer3
 
+    /* MAIN MENU */
+    Rectangle{
+    anchors.fill: parent
     ColumnLayout {
         id: column
         spacing: 2
 
+        /* TRAINING MENU */
         Rectangle {
             id: trainingOption
             Layout.preferredWidth: mainHandlerForm.width
@@ -52,7 +56,6 @@ Item {
                 }
             }
 
-
             MouseArea {
                 id: mouseTraining
                 anchors.fill:parent
@@ -72,12 +75,13 @@ Item {
                     mainHandlerForm.train_exer1=true;
                     mainHandlerForm.train_exer2=true;
                     mainHandlerForm.train_exer3=true;
-                    mainPageLoader.source="TrainingHandler.qml"
+                    mainPageLoader.source="TrainingMenu.qml"
                 }
             }
 
         }
 
+        /* RESULT MENU */
         Rectangle {
             id: resultOption
             Layout.preferredWidth: mainHandlerForm.width
@@ -130,10 +134,11 @@ Item {
                     parent.color="#8cf2dc"
                     txtResult.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="ResultPage.qml"
+                onPressed: mainPageLoader.source="ResultMenu.qml"
             }
         }
 
+        /* SETTING MENU */
         Rectangle {
             id: settingOption
             Layout.preferredWidth: mainHandlerForm.width
@@ -183,7 +188,7 @@ Item {
                     parent.color="#8cf2dc"
                     txtSetting.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="SettingPage_BT.qml"
+                onPressed: mainPageLoader.source="SettingMenu.qml"
             }
         }
     }
@@ -193,4 +198,5 @@ Item {
         anchors.fill:parent
         focus: true
     }
+}
 }

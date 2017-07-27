@@ -19,6 +19,10 @@ Item {
     property bool visibleTrainingPage: false
     property bool visibleEndPage: false
 
+    property bool visibleStar1_Pr1: false
+    property bool visibleStar2_Pr1: false
+    property bool visibleStar3_Pr1: false
+
     //prevent mouse controll impact with previous page
     MouseArea {
         anchors.fill:parent
@@ -123,15 +127,29 @@ Item {
                 height: parent.height*2/3
                 color: "#faf398"
 
-                // STAR
-                Image{
-                    width:  79*70/100   // 70% of original
-                    height: 77*70/100
-                    source: "Image/TrainingH_star.png"
-
+                Row{
                     anchors.horizontalCenter:parent.horizontalCenter
                     anchors.verticalCenter: parent.top
-                    verticalAlignment: Image.AlignBottom
+
+                    // STAR
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar1_Pr1
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar2_Pr1
+                    }
+                    Image{
+                        width:  79*70/100   // 70% of original
+                        height: 77*70/100
+                        source: "Image/TrainingH_star.png"
+                        visible: visibleStar3_Pr1
+                    }
                 }
 
                 // SCORE
@@ -148,33 +166,15 @@ Item {
 
                 // CONGRATULATION
                 Text {
-                    text: ""
+                    id: txtResult
                     font.pixelSize: 50
                     font.family: "Tamoha"
-                    color: "#d01818"
+                    color: "#eab809"
 
                     anchors.horizontalCenter:parent.horizontalCenter
                     verticalAlignment: Text.AlignVCenter
                     y: parent.height*30/100 // 30% distance
                 }
-
-                // BUTTON to TRAINING HANDLER
-//                Image{
-//                    id:imgTest
-//                    width:  492*60/100  //original * 60%
-//                    height: 152*60/100
-//                    source: "Image/Training_btn_Strength_02.png"
-
-
-//                    anchors.horizontalCenter:parent.horizontalCenter
-//                    verticalAlignment: Image.AlignBottom
-//                    y: parent.height*50/100 // 50% distance
-
-//                    MouseArea{
-//                    anchors.fill: parent
-//                    onPressed: trainingPageLoader.source="TrainingHandler.qml";
-//                    }
-//                }
 
                 SpriteSequence {
                         width: 492 *60/100
@@ -204,7 +204,7 @@ Item {
 
                     MouseArea{
                     anchors.fill: parent
-                    onPressed: trainingPageLoader.source="TrainingHandler.qml";
+                    onPressed: trainingPageLoader.source="TrainingMenu.qml";
                     }
 
                 }
@@ -217,13 +217,13 @@ Item {
     /******************************************
       ************** TRAINING ****************
       ****************************************/
+
     Rectangle {
         anchors.fill: parent
-        id: bgr_img
         visible: visibleTrainingPage
         color: "#ffffbb"
 
-        // NUMBER OF PRACTICE
+        /* NUMBER OF PRACTICE */
         Rectangle{
             width: 128*70*2/100
             height:128*70/100
@@ -670,7 +670,6 @@ Item {
                     backButton.source = "Image/back_button_onclick.png";
                     console.log("Back");
                     console.log(scoreValue.toLocaleString());
-                    trainingPageLoader.source="TrainingHandler.qml";
                 }
             }
         }
@@ -694,15 +693,10 @@ Item {
     property int keyDirection: 1        // direction of keyboard. 1 is direction from top to bottom; else is from bottom to top
     property int orderNumber: -3        // order of number; default is -3 mean at the first time, position moves from center to top (3 steps)
 
+    /* SCORE VALUE */
     property int scoreValue: 0
-//    property variant keyboard1Status: ["state1On", "state1Off", "state1Off", "state1Off", "state1Off", "state1Off", "state1Off", "state1Off"]
-//    property variant keyboard2Status: ["state2Off", "state2On", "state2Off", "state2Off", "state2Off", "state2Off", "state2Off", "state2Off"]
-//    property variant keyboard3Status: ["state3Off", "state3Off", "state3On", "state3Off", "state3Off", "state3Off", "state3Off", "state3Off"]
-//    property variant keyboard4Status: ["state4Off", "state4Off", "state4Off", "state4On", "state4Off", "state4Off", "state4Off", "state4Off"]
-//    property variant keyboard5Status: ["state5Off", "state5Off", "state5Off", "state5Off", "state5On", "state5Off", "state5Off", "state5Off"]
-//    property variant keyboard6Status: ["state6Off", "state6Off", "state6Off", "state6Off", "state6Off", "state6On", "state6Off", "state6Off"]
-//    property variant keyboard7Status: ["state7Off", "state7Off", "state7Off", "state7Off", "state7Off", "state7Off", "state7On", "state7Off"]
-//    property variant keyboard8Status: ["state8Off", "state8Off", "state8Off", "state8Off", "state8Off", "state8Off", "state8Off", "state8On"]
+    property int maxscoreValue: 0
+    property int counterNumber: 0
 
     Timer {
     interval: 100; running: visibleTrainingPage; repeat: true
@@ -777,6 +771,7 @@ Item {
                 }
                 orderNumber = orderNumber + 1
                 scoreValue = scoreValue + 1
+                counterNumber = counterNumber+1
 
             }
 
@@ -827,6 +822,7 @@ Item {
 
                 orderNumber = orderNumber - 1
                 scoreValue = scoreValue + 1
+                counterNumber = counterNumber+1
             }
 
 
@@ -834,7 +830,7 @@ Item {
         // stop timer when number of Practice is over
         else
         {   
-            txtintervalTiming.text = "TimeOut"
+            console.log("counterNumber is ", counterNumber);
             Timer.running = false
             visibleTrainingPage = false
             calculateScore();
@@ -842,14 +838,43 @@ Item {
         }
     }
     }
-    Text {id: txtintervalTiming; x:30;y:0}
-//    Text {id: txtStatus; x:30; y:20}
 
-    /* Score */
+    Text{id:txtcounterNumber; x:30; y:30}
+
+    /* SCORE CALCULATION */
     function calculateScore()
     {
         scoreValue = scoreValue*100;
+        validateText();
+    }
 
+    function validateText()
+    {
+        maxscoreValue = 67*100;
+        if((scoreValue <= maxscoreValue) & (scoreValue >= (maxscoreValue*2/3)))
+        {
+            console.log("scoreValue is ", scoreValue, "maxscoreValue is", maxscoreValue);
+            txtResult.text = "EXCELLENCE JOB! TOP SCORE";
+            visibleStar1_Pr1 = true;
+            visibleStar2_Pr1 = true;
+            visibleStar3_Pr1 = true;
+        }
+        else if((scoreValue < (maxscoreValue*2/3)) & (scoreValue >= (maxscoreValue*1/3)))
+        {
+            console.log("scoreValue is ", scoreValue, "maxscoreValue is", maxscoreValue);
+            txtResult.text = "GREAT JOB! HIGH SCORE";
+            visibleStar1_Pr1 = true;
+            visibleStar2_Pr1 = true;
+            visibleStar3_Pr1 = false;
+        }
+        else
+        {
+            console.log("scoreValue is ", scoreValue, "maxscoreValue is", maxscoreValue);
+            txtResult.text = "GOOD JOB";
+            visibleStar1_Pr1 = true;
+            visibleStar2_Pr1 = false;
+            visibleStar3_Pr1 = false;
+        }
     }
 
 

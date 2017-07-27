@@ -2,7 +2,6 @@ import QtQuick 2.4
 import QtQuick.Controls 1.4
 
 Item {
-
     anchors.fill: parent
 
     MouseArea {
@@ -41,8 +40,8 @@ Item {
         id: recBorder
         x: 41
         y: 74
-        width: parent.width
-        height: parent.height
+        width: 717
+        height: 505
         color: "#f9f9f8"
         radius: 30
         border.width: 3
