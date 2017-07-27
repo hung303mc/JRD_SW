@@ -62,7 +62,7 @@ Item {
                     text: "Back"
                     onClicked: {
                         console.log("Back");
-                        trainingPageLoader.source="MainHandler.qml";
+                        trainingPageLoader.source="MainMenu.qml";
                     }
                 }
             }

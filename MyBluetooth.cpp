@@ -18,7 +18,12 @@ QString MyBluetooth::RcvMsg() const
 
 QString MyBluetooth::BtAddress() const
 {
- return m_BtAddress;
+    return m_BtAddress;
+}
+
+int MyBluetooth::BtPosition() const
+{
+    return m_BtPosition;
 }
 
 void MyBluetooth::startServer()
@@ -36,9 +41,43 @@ void MyBluetooth::write(const QString message)
 
 void MyBluetooth::msgReceived()
 {
-    m_RcvMsg = QString::fromLocal8Bit(socket->readAll());
-    qDebug() << "Receive message from Client" + m_RcvMsg;
-    emit RcvMsgChanged();
+    QByteArray myData;
+    int startIndex, endIndex;
+    // Read data
+    myData=socket->readAll();
+    qDebug()<<"size: "<<myData.size()<<" Data: "<<myData;
+    m_RcvMsg = QString::fromLocal8Bit(myData);
+
+    // Process data
+    startIndex = myData.lastIndexOf('s');
+    endIndex = myData.indexOf('e',startIndex);
+    if((startIndex != -1) && (endIndex != -1))
+    {
+        myData = myData.mid(startIndex+1, endIndex - startIndex-1);
+//        qDebug() << "startIndex = " << startIndex;
+//        qDebug() << "endIndex = " << endIndex;
+//        qDebug() << "myData = " << myData;
+
+        m_BtPosition = myData.toInt();
+//        qDebug() << "Position = " + m_BtPosition;
+        if(m_BtPosition != 0){
+            if((m_BtPosition>0) && (m_BtPosition <= 1024))
+            {
+                qDebug() << "Position updated = " << m_BtPosition;
+                emit BtPositionChanged();
+            }
+            else
+            {
+                qDebug() << "error, number is out of range";
+            }
+
+        }
+        else{
+            qDebug()<<"error receive package: myData = " << myData << "is not a number";
+        }
+
+        emit RcvMsgChanged();
+    }
 }
 
 void MyBluetooth::socketConnected()
