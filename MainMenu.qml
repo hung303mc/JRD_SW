@@ -188,7 +188,7 @@ Item {
                     parent.color="#8cf2dc"
                     txtSetting.color = "#07335a"
                 }
-                onPressed: mainPageLoader.source="SettingMenu.qml"
+                onPressed: mainPageLoader.source="SettingPage_BT.qml"
             }
         }
     }

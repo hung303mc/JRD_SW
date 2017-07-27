@@ -31,5 +31,6 @@
         <file>MainMenu.qml</file>
         <file>TrainingMenu.qml</file>
         <file>SettingMenu.qml</file>
+        <file>SettingPage_BT.qml</file>
     </qresource>
 </RCC>

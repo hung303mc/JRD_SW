@@ -19,6 +19,14 @@ Item {
     property bool visibleTrainingPage: false
     property bool visibleEndPage: false
 
+    // rectPos: 1->8
+    property int rectPos: 1
+    property int btPos: myBluetooth.BtPosition
+    onBtPosChanged: {
+        rectPos = (btPos / 125) + 1;
+        console.log("Bluetooth position = " + rectPos)
+    }
+
     property bool visibleStar1_Pr1: false
     property bool visibleStar2_Pr1: false
     property bool visibleStar3_Pr1: false
@@ -277,7 +285,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state: "state1Off"
+            state:(1 == rectPos)? "state1On" : "state1Off"
 
             MouseArea {
                 id: mousekeyboard1
@@ -319,7 +327,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state : "state2Off"
+            state:(2 == rectPos)? "state2On" : "state2Off"
 
             MouseArea {
                 id: mousekeyboard2
@@ -361,7 +369,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state : "state3Off"
+            state:(3 == rectPos)? "state3On" : "state3Off"
 
             MouseArea {
                 id: mousekeyboard3
@@ -403,7 +411,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state: "state4Off"
+            state:(4 == rectPos)? "state4On" : "state4Off"
 
             MouseArea {
                 id: mousekeyboard4
@@ -445,7 +453,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state: "state5Off"
+            state:(5 == rectPos)? "state5On" : "state5Off"
 
             MouseArea {
                 id: mousekeyboard5
@@ -487,7 +495,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state: "state6Off"
+            state:(6 == rectPos)? "state6On" : "state6Off"
 
             MouseArea {
                 id: mousekeyboard6
@@ -529,7 +537,7 @@ Item {
             opacity: 1
             transformOrigin: Item.Center
 
-            state:"state7Off"
+            state:(7 == rectPos)? "state7On" : "state7Off"
 
             MouseArea {
                 id: mousekeyboard7
@@ -570,6 +578,8 @@ Item {
             border.width: 3
             opacity: 1
             transformOrigin: Item.Center
+
+            state:(8 == rectPos)? "state8On" : "state8Off"
 
             MouseArea {
                 id: mousekeyboard8
@@ -698,146 +708,147 @@ Item {
     property int maxscoreValue: 0
     property int counterNumber: 0
 
-    Timer {
-    interval: 100; running: visibleTrainingPage; repeat: true
+
+//    Timer {
+//    interval: 100; running: visibleTrainingPage; repeat: true
 
 
-    onTriggered:
-    {
-        // number of Practice is defined by doctor
-        if(numberOfPractice >= 0)
-        {
-            txtNumberofPractice.text = numberOfPractice.toString()
-            // direction from top to bottom
-            if(keyDirection == 1)
-            {
-                if(orderNumber == -3)
-                {
-                    keyboard4.state = "state4On"
-                    keyboard5.state = "state5On"
-                }
-                if(orderNumber == -2)
-                {
-                    keyboard4.state = "state4Off"
-                    keyboard5.state = "state5Off"
+//    onTriggered:
+//    {
+//        // number of Practice is defined by doctor
+//        if(numberOfPractice >= 0)
+//        {
+//            txtNumberofPractice.text = numberOfPractice.toString()
+//            // direction from top to bottom
+//            if(keyDirection == 1)
+//            {
+//                if(orderNumber == -3)
+//                {
+//                    keyboard4.state = "state4On"
+//                    keyboard5.state = "state5On"
+//                }
+//                if(orderNumber == -2)
+//                {
+//                    keyboard4.state = "state4Off"
+//                    keyboard5.state = "state5Off"
 
-                    keyboard3.state = "state3On"
-                }
-                if(orderNumber == -1)
-                {
-                    keyboard3.state = "state3Off"
-                    keyboard2.state = "state2On"
-                }
-                if(orderNumber == 0)
-                {
-                    keyboard2.state = "state2Off"
-                    keyboard1.state = "state1On"
-                }
-                if(orderNumber == 1)
-                {
-                    keyboard1.state = "state1Off"
-                    keyboard2.state = "state2On"
-                }
-                if(orderNumber == 2)
-                {
-                    keyboard2.state = "state2Off"
-                    keyboard3.state = "state3On"
-                }
-                if(orderNumber == 3)
-                {
-                    keyboard3.state = "state3Off"
-                    keyboard4.state = "state4On"
-                }
-                if(orderNumber == 4)
-                {
-                    keyboard4.state = "state4Off"
-                    keyboard5.state = "state5On"
-                }
-                if(orderNumber == 5)
-                {
-                    keyboard5.state = "state5Off"
-                    keyboard6.state = "state6On"
-                }
-                if(orderNumber == 6)
-                {
-                    keyboard6.state = "state6Off"
-                    keyboard7.state = "state7On"
-                }
-                if(orderNumber == 7)
-                {
-                    keyboard7.state = "state7Off"
-                    keyboard8.state = "state8On"
-                    keyDirection = -1
-                }
-                orderNumber = orderNumber + 1
-                scoreValue = scoreValue + 1
-                counterNumber = counterNumber+1
+//                    keyboard3.state = "state3On"
+//                }
+//                if(orderNumber == -1)
+//                {
+//                    keyboard3.state = "state3Off"
+//                    keyboard2.state = "state2On"
+//                }
+//                if(orderNumber == 0)
+//                {
+//                    keyboard2.state = "state2Off"
+//                    keyboard1.state = "state1On"
+//                }
+//                if(orderNumber == 1)
+//                {
+//                    keyboard1.state = "state1Off"
+//                    keyboard2.state = "state2On"
+//                }
+//                if(orderNumber == 2)
+//                {
+//                    keyboard2.state = "state2Off"
+//                    keyboard3.state = "state3On"
+//                }
+//                if(orderNumber == 3)
+//                {
+//                    keyboard3.state = "state3Off"
+//                    keyboard4.state = "state4On"
+//                }
+//                if(orderNumber == 4)
+//                {
+//                    keyboard4.state = "state4Off"
+//                    keyboard5.state = "state5On"
+//                }
+//                if(orderNumber == 5)
+//                {
+//                    keyboard5.state = "state5Off"
+//                    keyboard6.state = "state6On"
+//                }
+//                if(orderNumber == 6)
+//                {
+//                    keyboard6.state = "state6Off"
+//                    keyboard7.state = "state7On"
+//                }
+//                if(orderNumber == 7)
+//                {
+//                    keyboard7.state = "state7Off"
+//                    keyboard8.state = "state8On"
+//                    keyDirection = -1
+//                }
+//                orderNumber = orderNumber + 1
+//                scoreValue = scoreValue + 1
+//                counterNumber = counterNumber+1
 
-            }
+//            }
 
-            // direction from bottom to top
-            else
-            {
-                if(orderNumber == 8)
-                {
-                    keyboard8.state = "state8On"
-                }
-                if(orderNumber == 7)
-                {
-                    keyboard8.state = "state8Off"
-                    keyboard7.state = "state7On"
-                }
-                if(orderNumber == 6)
-                {
-                    keyboard7.state = "state7Off"
-                    keyboard6.state = "state6On"
-                }
-                if(orderNumber == 5)
-                {
-                    keyboard6.state = "state6Off"
-                    keyboard5.state = "state5On"
-                }
-                if(orderNumber == 4)
-                {
-                    keyboard5.state = "state5Off"
-                    keyboard4.state = "state4On"
-                }
-                if(orderNumber == 3)
-                {
-                    keyboard4.state = "state4Off"
-                    keyboard3.state = "state3On"
-                }
-                if(orderNumber == 2)
-                {
-                    keyboard3.state = "state3Off"
-                    keyboard2.state = "state2On"
-                }
-                if(orderNumber == 1)
-                {
-                    keyboard2.state = "state2Off"
-                    keyboard1.state = "state1On"
-                    keyDirection = 1
-                    numberOfPractice = numberOfPractice -1
-                }
+//            // direction from bottom to top
+//            else
+//            {
+//                if(orderNumber == 8)
+//                {
+//                    keyboard8.state = "state8On"
+//                }
+//                if(orderNumber == 7)
+//                {
+//                    keyboard8.state = "state8Off"
+//                    keyboard7.state = "state7On"
+//                }
+//                if(orderNumber == 6)
+//                {
+//                    keyboard7.state = "state7Off"
+//                    keyboard6.state = "state6On"
+//                }
+//                if(orderNumber == 5)
+//                {
+//                    keyboard6.state = "state6Off"
+//                    keyboard5.state = "state5On"
+//                }
+//                if(orderNumber == 4)
+//                {
+//                    keyboard5.state = "state5Off"
+//                    keyboard4.state = "state4On"
+//                }
+//                if(orderNumber == 3)
+//                {
+//                    keyboard4.state = "state4Off"
+//                    keyboard3.state = "state3On"
+//                }
+//                if(orderNumber == 2)
+//                {
+//                    keyboard3.state = "state3Off"
+//                    keyboard2.state = "state2On"
+//                }
+//                if(orderNumber == 1)
+//                {
+//                    keyboard2.state = "state2Off"
+//                    keyboard1.state = "state1On"
+//                    keyDirection = 1
+//                    numberOfPractice = numberOfPractice -1
+//                }
 
-                orderNumber = orderNumber - 1
-                scoreValue = scoreValue + 1
-                counterNumber = counterNumber+1
-            }
+//                orderNumber = orderNumber - 1
+//                scoreValue = scoreValue + 1
+//                counterNumber = counterNumber+1
+//            }
 
 
-        }
-        // stop timer when number of Practice is over
-        else
-        {   
-            console.log("counterNumber is ", counterNumber);
-            Timer.running = false
-            visibleTrainingPage = false
-            calculateScore();
-            visibleEndPage = true
-        }
-    }
-    }
+//        }
+//        // stop timer when number of Practice is over
+//        else
+//        {
+//            console.log("counterNumber is ", counterNumber);
+//            Timer.running = false
+//            visibleTrainingPage = false
+//            calculateScore();
+//            visibleEndPage = true
+//        }
+//    }
+//    }
 
     Text{id:txtcounterNumber; x:30; y:30}
 
