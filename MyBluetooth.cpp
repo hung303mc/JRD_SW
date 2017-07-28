@@ -52,20 +52,20 @@ void MyBluetooth::msgReceived()
     m_RcvMsg = QString::fromLocal8Bit(myData);
 
     // Process data
-    startIndex = myData.lastIndexOf('!');
-    endIndex = myData.indexOf('@',startIndex);
+    startIndex = myData.lastIndexOf('~');
+    endIndex = myData.indexOf('!',startIndex);
     if((startIndex != -1) && (endIndex != -1))
     {
         myData = myData.mid(startIndex+1, endIndex - startIndex-1);
 //        qDebug() << "startIndex = " << startIndex;
 //        qDebug() << "endIndex = " << endIndex;
 //        qDebug() << "myData = " << myData;
-
         m_BtPosition = myData.toInt();
 //        qDebug() << "Position = " + m_BtPosition;
         if(m_BtPosition != 0){
-            if((m_BtPosition>0) && (m_BtPosition <= 1024))
+            if((m_BtPosition>0) && (m_BtPosition <= 40000))
             {
+                m_BtPosition = (40000 - m_BtPosition) / 40;
                 qDebug() << "Position updated = " << m_BtPosition;
                 emit BtPositionChanged();
             }
@@ -73,7 +73,6 @@ void MyBluetooth::msgReceived()
             {
                 qDebug() << "error, number is out of range";
             }
-
         }
         else{
             qDebug()<<"error receive package: myData = " << myData << "is not a number";

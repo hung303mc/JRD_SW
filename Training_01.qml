@@ -37,6 +37,8 @@ Item {
         hoverEnabled: true
     }
 
+
+
     /**********************
      ***** START PAGE *****
      **********************/
@@ -90,12 +92,68 @@ Item {
                     verticalAlignment: Image.AlignBottom
                     y: parent.height*30/100 // 30% distance
 
+                    Timer{
+                        id: startTimer; interval: 2000; running: false; repeat: true
+                        onTriggered: {
+                            startTimer.running = false;
+                            setupTimer.running = true;
+                        }
+                    }
+
+                    Timer{
+                        id: setupTimer; interval: 100; running: false; repeat: true
+                        property int step: 0
+                        onTriggered: {
+                            switch(step){
+                            case 0:{
+                                myBluetooth.write("e1");
+                                console.log("Display position");
+                                break;
+                            }
+                            case 1:{
+                                //
+                                myBluetooth.write("w1");
+                                console.log("set mode 1 for device: passive");
+                                break;
+                            }
+                            case 2:{
+                                //
+                                myBluetooth.write("SP-20000");
+                                console.log("set the first position");
+                                break;
+                            }
+                            case 3:{
+                                //
+                                myBluetooth.write("a10000");
+                                console.log("set the altitude 1000");
+                                break;
+                            }
+                            case 4:{
+                                myBluetooth.write("t0.5");
+                                console.log("set freqence for device");
+                                break;
+                            }
+                            case 5:{
+                                visibleStartPage = false;
+                                visibleTrainingPage = true;
+                                break;
+                            }
+                            }
+                            if(step >= 5){
+                                setupTimer.running = false;
+                            }
+                            else{
+                                step += 1;
+                            }
+                        }
+                    }
 
                     MouseArea{
                     anchors.fill: parent
                     onPressed: {
-                        visibleStartPage = false
-                        visibleTrainingPage = true
+                        myBluetooth.write("c");
+                        console.log("start device");
+                        startTimer.running = true;
                     }
                     }
                 }
@@ -673,7 +731,9 @@ Item {
                 }
                 onPressed:
                 {
-                    visibleTrainingPage = false
+                    myBluetooth.write("d");
+                    console.log("Stop device");
+                    visibleTrainingPage = false;
                     calculateScore();
                     visibleEndPage = true
 
