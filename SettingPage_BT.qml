@@ -55,6 +55,7 @@ Item {
                     text: "Send"
                     onClicked: {
                         myBluetooth.write(txtSendMsg.text);
+                        txtSendMsg.text = "";
                     }
                 }
                 Button {
